@@ -1,0 +1,68 @@
+:root {
+  overflow: hidden;
+}
+
+.app-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.note-title {
+  height: 100vh;
+  width: 20vw;
+  list-style: none;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+      height: 30px;
+      width: 30px;
+      background-color: rgb(127, 255, 150);
+      color: black;
+      border: none;
+      border-radius: 20px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .delete-all {
+      height: 30px;
+      width: 30px;
+      background-color: rgb(255, 127, 127);
+      color: black;
+      border: none;
+      border-radius: 20px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+  }
+
+  .note-list {
+    list-style: none;
+    padding: 0;
+    height: 77vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .title-container {
+      border-bottom: 1px solid black;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  }
+}
+
+.note-textarea {
+  width: 70vw;
+  height: 90vh;
+}
