@@ -21,7 +21,7 @@ const noteSlice = createSlice({
     addNote(state, action: PayloadAction<Note>) {
       state.notes.push(action.payload);
     },
-    clearAllNotes(state) {
+    deleteAllNotes(state) {
       state.notes = [];
     },
     updateNote(state, action: PayloadAction<Note>) {
@@ -38,9 +38,13 @@ const noteSlice = createSlice({
         state.notes.unshift(updatedNote);
       }
     },
+    deleteCertainNote(state, action: PayloadAction<string>) {
+      state.notes = state.notes.filter((note) => note.id !== action.payload);
+    },
   },
 });
 
-export const { addNote, clearAllNotes, updateNote } = noteSlice.actions;
+export const { addNote, deleteAllNotes, updateNote, deleteCertainNote } =
+  noteSlice.actions;
 
 export default noteSlice.reducer;

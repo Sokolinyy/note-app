@@ -4,10 +4,13 @@ import { RootState } from "../redux/store";
 import {
   Note,
   addNote,
-  clearAllNotes,
   updateNote,
+  deleteAllNotes,
+  deleteCertainNote,
 } from "../redux/slices/noteSlise";
 import { nanoid } from "@reduxjs/toolkit";
+
+import trashIcon from "../assets/trash-icon.svg";
 
 const NoteList: React.FC = () => {
   const notes = useSelector((state: RootState) => state.notes);
@@ -34,10 +37,9 @@ const NoteList: React.FC = () => {
     const updatedContent = event.target.value;
     // If selected note, return array, but with changed value of
     if (selectedNote) {
-      const updatedTitle = updatedContent.slice(0, 20) || "Empty note...";
       const updatedNote = {
         ...selectedNote,
-        title: updatedTitle,
+        title: updatedContent,
         content: updatedContent,
       };
       setSelectedNote(updatedNote);
@@ -49,6 +51,30 @@ const NoteList: React.FC = () => {
     setSelectedNote(note);
   };
 
+  const handleDeleteAllNotes = () => {
+    const confirmDeleteAll = window.confirm(
+      "Are you sure you want to delete all notes?"
+    );
+    if (confirmDeleteAll) {
+      dispatch(deleteAllNotes());
+    }
+  };
+
+  const handleDeleteNote = (noteId: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete the note?"
+    );
+    if (confirmDelete) {
+      dispatch(deleteCertainNote(noteId));
+    }
+  };
+
+  useEffect(() => {
+    if (notes.notes.length < 1) {
+      setNoteCount(1);
+    }
+  });
+
   return (
     <div className="app-container">
       <div className="note-title">
@@ -57,16 +83,39 @@ const NoteList: React.FC = () => {
           <button className="add" onClick={handleAddNote}>
             +
           </button>
-          <button className="delete-all">-</button>
+          <button className="delete-all" onClick={handleDeleteAllNotes}>
+            -
+          </button>
         </div>
         <ul className="note-list">
           {notes.notes.map((note) => (
             <li
               key={note.id}
-              className="title-container"
+              className={`title-container ${
+                selectedNote && note.id === selectedNote.id ? "active" : ""
+              }`}
               onClick={() => handleNoteClick(note)}
             >
-              <p>{note.title}</p> {/* Display the note's title */}
+              <p>
+                {note.title.length > 0 ? (
+                  note.title.length > 25 ? (
+                    `${note.title.slice(0, 25)}...`
+                  ) : (
+                    note.title
+                  )
+                ) : (
+                  <span className="empty-note-title">Empty note...</span>
+                )}
+              </p>
+              <img
+                className="trash-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteNote(note.id);
+                }}
+                src={trashIcon}
+                alt=""
+              />
             </li>
           ))}
         </ul>
