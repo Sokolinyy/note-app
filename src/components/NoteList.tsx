@@ -10,7 +10,10 @@ import {
 } from "../redux/slices/noteSlise";
 import { nanoid } from "@reduxjs/toolkit";
 
+import DontHaveNote from "./DontHaveNote";
 import trashIcon from "../assets/trash-icon.svg";
+import createNoteIcon from "../assets/note-svgrepo-com.svg";
+import deleteNoteIcon from "../assets/delete-clipboard-svgrepo-com.svg";
 
 const NoteList: React.FC = () => {
   const notes = useSelector((state: RootState) => state.notes);
@@ -78,15 +81,19 @@ const NoteList: React.FC = () => {
   return (
     <div className="app-container">
       <div className="note-title">
-        <div className="header">
-          <h1>Note List</h1>
-          <button className="add" onClick={handleAddNote}>
-            +
-          </button>
-          <button className="delete-all" onClick={handleDeleteAllNotes}>
-            -
-          </button>
-        </div>
+        {notes.notes.length > 0 && (
+          <div className="header">
+            <h1>Note List</h1>
+            <div className="button-container">
+              <button className="add" onClick={handleAddNote}>
+                <img src={createNoteIcon} alt="" />
+              </button>
+              <button className="delete-all" onClick={handleDeleteAllNotes}>
+                <img src={deleteNoteIcon} alt="" />
+              </button>
+            </div>
+          </div>
+        )}
         <ul className="note-list">
           {notes.notes.map((note) => (
             <li
@@ -122,7 +129,7 @@ const NoteList: React.FC = () => {
       </div>
       <div className="note-content">
         {notes.notes.length === 0 ? (
-          <h2>Add note</h2>
+          <DontHaveNote handleAddNote={handleAddNote} />
         ) : (
           <textarea
             placeholder="Write something..."
