@@ -38,13 +38,12 @@ const NoteList: React.FC = () => {
   };
 
   const onChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const updatedContent = event.target.value;
     // If selected note, return array, but with changed value of
     if (selectedNote) {
       const updatedNote = {
         ...selectedNote,
-        title: updatedContent,
-        content: updatedContent,
+        title: event.target.value,
+        content: event.target.value,
       };
       setSelectedNote(updatedNote);
       dispatch(updateNote(updatedNote)); // Update the note in the Redux store
@@ -53,6 +52,7 @@ const NoteList: React.FC = () => {
 
   const handleNoteClick = (note: Note) => {
     setSelectedNote(note);
+    setShowNoteTitle(false);
   };
 
   const handleDeleteAllNotes = () => {
@@ -91,7 +91,9 @@ const NoteList: React.FC = () => {
         className={`hamburger-menu ${showNoteTitle ? "open" : ""}`}
         onClick={toggleNoteTitle}
       >
-        ☰
+        <div className={`hamburger-item ${showNoteTitle ? "open" : ""}`}></div>
+        <div className={`hamburger-item ${showNoteTitle ? "open" : ""}`}></div>
+        <div className={`hamburger-item ${showNoteTitle ? "open" : ""}`}></div>
       </button>
       <div className={`note-title${showNoteTitle ? " open" : ""}`}>
         {notes.notes.length > 0 && (
