@@ -21,6 +21,7 @@ const NoteList: React.FC = () => {
 
   const [noteCount, setNoteCount] = useState(1);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const [showNoteTitle, setShowNoteTitle] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleAddNote = () => {
@@ -72,6 +73,10 @@ const NoteList: React.FC = () => {
     }
   };
 
+  const toggleNoteTitle = () => {
+    setShowNoteTitle(!showNoteTitle);
+  };
+
   useEffect(() => {
     if (notes.notes.length < 1) {
       setNoteCount(1);
@@ -82,7 +87,13 @@ const NoteList: React.FC = () => {
 
   return (
     <div className="app-container">
-      <div className="note-title">
+      <button
+        className={`hamburger-menu ${showNoteTitle ? "open" : ""}`}
+        onClick={toggleNoteTitle}
+      >
+        ☰
+      </button>
+      <div className={`note-title${showNoteTitle ? " open" : ""}`}>
         {notes.notes.length > 0 && (
           <div className="header">
             <h1>Note List</h1>
@@ -105,10 +116,10 @@ const NoteList: React.FC = () => {
               }`}
               onClick={() => handleNoteClick(note)}
             >
-              <p>
+              <p className="">
                 {note.title.length > 0 ? (
-                  note.title.length > 25 ? (
-                    `${note.title.slice(0, 25)}...`
+                  note.title.length > 20 ? (
+                    `${note.title.slice(0, 20)}...`
                   ) : (
                     note.title
                   )

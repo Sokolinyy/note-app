@@ -2,11 +2,43 @@
   overflow: hidden;
 }
 
+body {
+  margin: 0;
+}
+
 .app-container {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   position: relative;
+
+  .hamburger-menu {
+    display: none;
+    cursor: pointer;
+    font-size: 40px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    z-index: 100;
+  }
+
+  @media screen and (max-width: 740px) {
+    .hamburger-menu {
+      display: block;
+      background-color: transparent;
+      border: none;
+      font-size: 40px;
+
+      &.open {
+        color: white;
+      }
+    }
+  }
+
+  .note-title.open {
+    display: block;
+    height: 100vh;
+  }
 
   .dont-have-note-page {
     position: absolute;
@@ -44,6 +76,17 @@
   height: 100vh;
   width: 20vw;
   list-style: none;
+  margin-right: 20px;
+
+  @media screen and (max-width: 740px) {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
 
   .header {
     display: flex;
@@ -56,6 +99,10 @@
       display: flex;
       justify-content: space-evenly;
       transition: all;
+
+      @media screen and (max-width: 1040px) {
+        flex-direction: column-reverse;
+      }
 
       img {
         width: 30px;
@@ -79,6 +126,10 @@
           opacity: 0.8;
           transform: scale(1);
         }
+
+        @media screen and (max-width: 1040px) {
+          margin-top: 20px;
+        }
       }
 
       .delete-all {
@@ -88,7 +139,7 @@
         border-radius: 10px;
         font-size: 25px;
         cursor: pointer;
-        padding: 0px 35px;
+        padding: 4px 35px;
 
         &:hover {
           transform: scale(1.1);
@@ -124,6 +175,10 @@
       align-items: center;
       justify-content: space-between;
 
+      @media screen and (max-width: 740px) {
+        color: white;
+      }
+
       .trash-icon {
         opacity: 0;
         width: 30px;
@@ -152,6 +207,11 @@
         &:not(:first-child) {
           border-top: none;
         }
+
+        @media screen and (max-width: 740px) {
+          background-color: rgba(0, 0, 0, 0.4);
+          color: rgb(188, 117, 228);
+        }
       }
     }
 
@@ -166,4 +226,10 @@
   height: 80vh;
   font-size: 30px;
   padding: 30px;
+
+  @media screen and (max-width: 740px) {
+    margin-top: 80px;
+    outline: none;
+    width: 90vw;
+  }
 }
