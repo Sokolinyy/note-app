@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const savedNotesString = localStorage.getItem("notes");
+const savedNotes = savedNotesString ? JSON.parse(savedNotesString) : [];
+
 export interface Note {
   id: string;
   title: string;
@@ -11,7 +14,7 @@ export interface NoteState {
 }
 
 const initialState: NoteState = {
-  notes: [],
+  notes: savedNotes,
 };
 
 const noteSlice = createSlice({

@@ -76,7 +76,9 @@ const NoteList: React.FC = () => {
     if (notes.notes.length < 1) {
       setNoteCount(1);
     }
-  });
+
+    localStorage.setItem("notes", JSON.stringify(notes.notes));
+  }, [notes.notes]);
 
   return (
     <div className="app-container">
